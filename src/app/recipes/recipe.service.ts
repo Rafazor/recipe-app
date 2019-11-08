@@ -8,28 +8,35 @@ import {Subject} from 'rxjs';
 export class RecipeService {
   recipesUpdated = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      'Cascaval Pane',
-      'Wow!',
-      'https://pizzaka.ro/wp-content/uploads/2018/03/PORTIECASCAVALPANE.10LEIJPG.jpg',
-      [
-        new Ingredient('sare', 2),
-        new Ingredient('plm', 5),
-        new Ingredient('piper', 5)
-      ]),
-    new Recipe(
-      'Cascaval Pane',
-      'daaaa!',
-      'https://pizzaka.ro/wp-content/uploads/2018/03/PORTIECASCAVALPANE.10LEIJPG.jpg',
-      [
-        new Ingredient('sare', 2),
-        new Ingredient('plm', 5),
-        new Ingredient('piper', 5)
-      ])
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //     'Cascaval Pane',
+  //     'Wow!',
+  //     'https://pizzaka.ro/wp-content/uploads/2018/03/PORTIECASCAVALPANE.10LEIJPG.jpg',
+  //     [
+  //       new Ingredient('sare', 2),
+  //       new Ingredient('plm', 5),
+  //       new Ingredient('piper', 5)
+  //     ]),
+  //   new Recipe(
+  //     'Cascaval Pane',
+  //     'daaaa!',
+  //     'https://pizzaka.ro/wp-content/uploads/2018/03/PORTIECASCAVALPANE.10LEIJPG.jpg',
+  //     [
+  //       new Ingredient('sare', 2),
+  //       new Ingredient('plm', 5),
+  //       new Ingredient('piper', 5)
+  //     ])
+  // ];
+
+  private recipes: Recipe[] = [];
 
   constructor(private shoppingListService: ShoppingListService) {
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesUpdated.next(this.recipes.slice());
   }
 
   getRecipes(): Recipe[] {

@@ -3,35 +3,18 @@ import {Injectable} from '@angular/core';
 import {Ingredient} from '../shared/ingredient.model';
 import {ShoppingListService} from '../shopping-list/shopping-list.service';
 import {Subject} from 'rxjs';
+import {Store} from '@ngrx/store';
+import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
+import * as fromShoppingList from '../shopping-list/store/shopping-list.reducer';
+
 
 @Injectable()
 export class RecipeService {
   recipesUpdated = new Subject<Recipe[]>();
 
-  // private recipes: Recipe[] = [
-  //   new Recipe(
-  //     'Cascaval Pane',
-  //     'Wow!',
-  //     'https://pizzaka.ro/wp-content/uploads/2018/03/PORTIECASCAVALPANE.10LEIJPG.jpg',
-  //     [
-  //       new Ingredient('sare', 2),
-  //       new Ingredient('plm', 5),
-  //       new Ingredient('piper', 5)
-  //     ]),
-  //   new Recipe(
-  //     'Cascaval Pane',
-  //     'daaaa!',
-  //     'https://pizzaka.ro/wp-content/uploads/2018/03/PORTIECASCAVALPANE.10LEIJPG.jpg',
-  //     [
-  //       new Ingredient('sare', 2),
-  //       new Ingredient('plm', 5),
-  //       new Ingredient('piper', 5)
-  //     ])
-  // ];
-
   private recipes: Recipe[] = [];
 
-  constructor(private shoppingListService: ShoppingListService) {
+  constructor(private shoppingListService: ShoppingListService, private store: Store<fromShoppingList.AppState>) {
   }
 
   setRecipes(recipes: Recipe[]) {
@@ -48,7 +31,7 @@ export class RecipeService {
   }
 
   addNewIngredients(ingredients) {
-    this.shoppingListService.addNewIngredients(ingredients);
+    this.store.dispatch(new ShoppingListActions.AddIngredients(ingredients));
   }
 
   addRecipe(recipe: Recipe) {
